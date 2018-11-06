@@ -1,0 +1,950 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "      year  station_no station_name  station_g_cd  josha_num  meijo  meiko  \\\n",
+      "0     1991           0          大曽根       1141105  4785428.0    1.0    1.0   \n",
+      "1     1992           0          大曽根       1141105  4660204.0    1.0    1.0   \n",
+      "2     1993           0          大曽根       1141105  4592223.0    1.0    1.0   \n",
+      "3     1994           0          大曽根       1141105  4669642.0    1.0    1.0   \n",
+      "4     1995           0          大曽根       1141105  4629653.0    1.0    1.0   \n",
+      "5     1996           0          大曽根       1141105  4498914.0    1.0    1.0   \n",
+      "6     1997           0          大曽根       1141105  4663364.0    1.0    1.0   \n",
+      "7     1998           0          大曽根       1141105  4619636.0    1.0    1.0   \n",
+      "8     1999           0          大曽根       1141105  4375248.0    1.0    1.0   \n",
+      "9     2000           0          大曽根       1141105  3744964.0    1.0    1.0   \n",
+      "10    2001           0          大曽根       1141105  4102394.0    1.0    1.0   \n",
+      "11    2002           0          大曽根       1141105  4219703.0    1.0    1.0   \n",
+      "12    2003           0          大曽根       1141105  4859742.0    1.0    1.0   \n",
+      "13    2004           0          大曽根       1141105  5182003.0    1.0    1.0   \n",
+      "14    2005           0          大曽根       1141105  5547024.0    1.0    1.0   \n",
+      "15    2006           0          大曽根       1141105  5842120.0    1.0    1.0   \n",
+      "16    2007           0          大曽根       1141105  6080285.0    1.0    1.0   \n",
+      "17    2008           0          大曽根       1141105  6251626.0    1.0    1.0   \n",
+      "18    2009           0          大曽根       1141105  6235527.0    1.0    1.0   \n",
+      "19    2010           0          大曽根       1141105  6355136.0    1.0    1.0   \n",
+      "20    2011           0          大曽根       1141105  6414885.0    1.0    1.0   \n",
+      "21    2012           0          大曽根       1141105  6505159.0    1.0    1.0   \n",
+      "22    2013           0          大曽根       1141105  6763018.0    1.0    1.0   \n",
+      "23    2014           0          大曽根       1141105  6871223.0    1.0    1.0   \n",
+      "24    2015           0          大曽根       1141105  7038731.0    1.0    1.0   \n",
+      "25    1991           1          平安通       9951403  3320017.0    1.0    1.0   \n",
+      "26    1992           1          平安通       9951403  3255846.0    1.0    1.0   \n",
+      "27    1993           1          平安通       9951403  3217203.0    1.0    1.0   \n",
+      "28    1994           1          平安通       9951403  3104134.0    1.0    1.0   \n",
+      "29    1995           1          平安通       9951403  3076055.0    1.0    1.0   \n",
+      "...    ...         ...          ...           ...        ...    ...    ...   \n",
+      "4002  2011        4036          上飯田       3001801   638983.0    NaN    NaN   \n",
+      "4003  2012        4036          上飯田       3001801   633186.0    NaN    NaN   \n",
+      "4004  2013        4036          上飯田       3001801   647445.0    NaN    NaN   \n",
+      "4005  2014        4036          上飯田       3001801   655872.0    NaN    NaN   \n",
+      "4006  2015        4036          上飯田       3001801   675505.0    NaN    NaN   \n",
+      "4007  1991        4037           味鋺       3001802   409157.0    NaN    NaN   \n",
+      "4008  1992        4037           味鋺       3001802   397405.0    NaN    NaN   \n",
+      "4009  1993        4037           味鋺       3001802   369678.0    NaN    NaN   \n",
+      "4010  1994        4037           味鋺       3001802   346379.0    NaN    NaN   \n",
+      "4011  1995        4037           味鋺       3001802   322545.0    NaN    NaN   \n",
+      "4012  1996        4037           味鋺       3001802   299422.0    NaN    NaN   \n",
+      "4013  1997        4037           味鋺       3001802   285060.0    NaN    NaN   \n",
+      "4014  1998        4037           味鋺       3001802   265123.0    NaN    NaN   \n",
+      "4015  1999        4037           味鋺       3001802   262369.0    NaN    NaN   \n",
+      "4016  2000        4037           味鋺       3001802   248644.0    NaN    NaN   \n",
+      "4017  2001        4037           味鋺       3001802   229127.0    NaN    NaN   \n",
+      "4018  2002        4037           味鋺       3001802   226365.0    NaN    NaN   \n",
+      "4019  2003        4037           味鋺       3001802   435508.0    NaN    NaN   \n",
+      "4020  2004        4037           味鋺       3001802   564849.0    NaN    NaN   \n",
+      "4021  2005        4037           味鋺       3001802   628981.0    NaN    NaN   \n",
+      "4022  2006        4037           味鋺       3001802   651016.0    NaN    NaN   \n",
+      "4023  2007        4037           味鋺       3001802   672279.0    NaN    NaN   \n",
+      "4024  2008        4037           味鋺       3001802   695038.0    NaN    NaN   \n",
+      "4025  2009        4037           味鋺       3001802   686077.0    NaN    NaN   \n",
+      "4026  2010        4037           味鋺       3001802   708468.0    NaN    NaN   \n",
+      "4027  2011        4037           味鋺       3001802   709925.0    NaN    NaN   \n",
+      "4028  2012        4037           味鋺       3001802   705755.0    NaN    NaN   \n",
+      "4029  2013        4037           味鋺       3001802   734613.0    NaN    NaN   \n",
+      "4030  2014        4037           味鋺       3001802   745350.0    NaN    NaN   \n",
+      "4031  2015        4037           味鋺       3001802   778484.0    NaN    NaN   \n",
+      "\n",
+      "      kamiida  higashiyama  tsurumai  sakuradori  aonami  shinkansen  tokaido  \\\n",
+      "0         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "1         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "2         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "3         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "5         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "6         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "7         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "8         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "9         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "10        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "11        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "12        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "13        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "14        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "15        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "16        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "17        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "18        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "19        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "20        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "21        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "22        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "23        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "24        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "25        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "26        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "27        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "28        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "29        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "...       ...          ...       ...         ...     ...         ...      ...   \n",
+      "4002      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4003      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4004      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4005      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4006      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4007      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4008      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4009      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4010      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4011      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4012      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4013      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4014      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4015      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4016      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4017      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4018      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4019      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4020      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4021      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4022      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4023      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4024      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4025      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4026      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4027      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4028      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4029      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4030      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4031      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "\n",
+      "      chuo  kansai  meitetsu  kintetsu  lines  \n",
+      "0      NaN     NaN       NaN       NaN      2  \n",
+      "1      NaN     NaN       NaN       NaN      2  \n",
+      "2      NaN     NaN       NaN       NaN      2  \n",
+      "3      NaN     NaN       NaN       NaN      2  \n",
+      "4      NaN     NaN       NaN       NaN      2  \n",
+      "5      NaN     NaN       NaN       NaN      2  \n",
+      "6      NaN     NaN       NaN       NaN      2  \n",
+      "7      NaN     NaN       NaN       NaN      2  \n",
+      "8      NaN     NaN       NaN       NaN      2  \n",
+      "9      NaN     NaN       NaN       NaN      2  \n",
+      "10     NaN     NaN       NaN       NaN      2  \n",
+      "11     NaN     NaN       NaN       NaN      2  \n",
+      "12     NaN     NaN       NaN       NaN      2  \n",
+      "13     NaN     NaN       NaN       NaN      2  \n",
+      "14     NaN     NaN       NaN       NaN      2  \n",
+      "15     NaN     NaN       NaN       NaN      2  \n",
+      "16     NaN     NaN       NaN       NaN      2  \n",
+      "17     NaN     NaN       NaN       NaN      2  \n",
+      "18     NaN     NaN       NaN       NaN      2  \n",
+      "19     NaN     NaN       NaN       NaN      2  \n",
+      "20     NaN     NaN       NaN       NaN      2  \n",
+      "21     NaN     NaN       NaN       NaN      2  \n",
+      "22     NaN     NaN       NaN       NaN      2  \n",
+      "23     NaN     NaN       NaN       NaN      2  \n",
+      "24     NaN     NaN       NaN       NaN      2  \n",
+      "25     NaN     NaN       NaN       NaN      2  \n",
+      "26     NaN     NaN       NaN       NaN      2  \n",
+      "27     NaN     NaN       NaN       NaN      2  \n",
+      "28     NaN     NaN       NaN       NaN      2  \n",
+      "29     NaN     NaN       NaN       NaN      2  \n",
+      "...    ...     ...       ...       ...    ...  \n",
+      "4002   NaN     NaN       1.0       NaN      1  \n",
+      "4003   NaN     NaN       1.0       NaN      1  \n",
+      "4004   NaN     NaN       1.0       NaN      1  \n",
+      "4005   NaN     NaN       1.0       NaN      1  \n",
+      "4006   NaN     NaN       1.0       NaN      1  \n",
+      "4007   NaN     NaN       1.0       NaN      1  \n",
+      "4008   NaN     NaN       1.0       NaN      1  \n",
+      "4009   NaN     NaN       1.0       NaN      1  \n",
+      "4010   NaN     NaN       1.0       NaN      1  \n",
+      "4011   NaN     NaN       1.0       NaN      1  \n",
+      "4012   NaN     NaN       1.0       NaN      1  \n",
+      "4013   NaN     NaN       1.0       NaN      1  \n",
+      "4014   NaN     NaN       1.0       NaN      1  \n",
+      "4015   NaN     NaN       1.0       NaN      1  \n",
+      "4016   NaN     NaN       1.0       NaN      1  \n",
+      "4017   NaN     NaN       1.0       NaN      1  \n",
+      "4018   NaN     NaN       1.0       NaN      1  \n",
+      "4019   NaN     NaN       1.0       NaN      1  \n",
+      "4020   NaN     NaN       1.0       NaN      1  \n",
+      "4021   NaN     NaN       1.0       NaN      1  \n",
+      "4022   NaN     NaN       1.0       NaN      1  \n",
+      "4023   NaN     NaN       1.0       NaN      1  \n",
+      "4024   NaN     NaN       1.0       NaN      1  \n",
+      "4025   NaN     NaN       1.0       NaN      1  \n",
+      "4026   NaN     NaN       1.0       NaN      1  \n",
+      "4027   NaN     NaN       1.0       NaN      1  \n",
+      "4028   NaN     NaN       1.0       NaN      1  \n",
+      "4029   NaN     NaN       1.0       NaN      1  \n",
+      "4030   NaN     NaN       1.0       NaN      1  \n",
+      "4031   NaN     NaN       1.0       NaN      1  \n",
+      "\n",
+      "[4032 rows x 19 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "Nagoya_Station_data = pd.read_excel(\"./datas/Nagoya_Station_data(josha).xlsx\")\n",
+    "\n",
+    "print(Nagoya_Station_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#名古屋駅、金山、栄が外れ値すぎるので取り除く\n",
+    "#Nagoya_Station_data=Nagoya_Station_data[Nagoya_Station_data['station_name']!=\"名古屋\"]\n",
+    "#Nagoya_Station_data=Nagoya_Station_data[Nagoya_Station_data['station_name']!=\"金山\"]\n",
+    "#Nagoya_Station_data=Nagoya_Station_data[Nagoya_Station_data['station_name']!=\"栄\"]\n",
+    "\n",
+    "#print(Nagoya_Station_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "      year  station_no station_name  station_g_cd  josha_num  meijo  meiko  \\\n",
+      "0     1991           0          大曽根       1141105  4785428.0    1.0    1.0   \n",
+      "1     1992           0          大曽根       1141105  4660204.0    1.0    1.0   \n",
+      "2     1993           0          大曽根       1141105  4592223.0    1.0    1.0   \n",
+      "3     1994           0          大曽根       1141105  4669642.0    1.0    1.0   \n",
+      "4     1995           0          大曽根       1141105  4629653.0    1.0    1.0   \n",
+      "5     1996           0          大曽根       1141105  4498914.0    1.0    1.0   \n",
+      "6     1997           0          大曽根       1141105  4663364.0    1.0    1.0   \n",
+      "7     1998           0          大曽根       1141105  4619636.0    1.0    1.0   \n",
+      "8     1999           0          大曽根       1141105  4375248.0    1.0    1.0   \n",
+      "9     2000           0          大曽根       1141105  3744964.0    1.0    1.0   \n",
+      "10    2001           0          大曽根       1141105  4102394.0    1.0    1.0   \n",
+      "11    2002           0          大曽根       1141105  4219703.0    1.0    1.0   \n",
+      "12    2003           0          大曽根       1141105  4859742.0    1.0    1.0   \n",
+      "13    2004           0          大曽根       1141105  5182003.0    1.0    1.0   \n",
+      "14    2005           0          大曽根       1141105  5547024.0    1.0    1.0   \n",
+      "15    2006           0          大曽根       1141105  5842120.0    1.0    1.0   \n",
+      "16    2007           0          大曽根       1141105  6080285.0    1.0    1.0   \n",
+      "17    2008           0          大曽根       1141105  6251626.0    1.0    1.0   \n",
+      "18    2009           0          大曽根       1141105  6235527.0    1.0    1.0   \n",
+      "19    2010           0          大曽根       1141105  6355136.0    1.0    1.0   \n",
+      "20    2011           0          大曽根       1141105  6414885.0    1.0    1.0   \n",
+      "21    2012           0          大曽根       1141105  6505159.0    1.0    1.0   \n",
+      "22    2013           0          大曽根       1141105  6763018.0    1.0    1.0   \n",
+      "23    2014           0          大曽根       1141105  6871223.0    1.0    1.0   \n",
+      "24    2015           0          大曽根       1141105  7038731.0    1.0    1.0   \n",
+      "25    1991           1          平安通       9951403  3320017.0    1.0    1.0   \n",
+      "26    1992           1          平安通       9951403  3255846.0    1.0    1.0   \n",
+      "27    1993           1          平安通       9951403  3217203.0    1.0    1.0   \n",
+      "28    1994           1          平安通       9951403  3104134.0    1.0    1.0   \n",
+      "29    1995           1          平安通       9951403  3076055.0    1.0    1.0   \n",
+      "...    ...         ...          ...           ...        ...    ...    ...   \n",
+      "4002  2011        4036          上飯田       3001801   638983.0    NaN    NaN   \n",
+      "4003  2012        4036          上飯田       3001801   633186.0    NaN    NaN   \n",
+      "4004  2013        4036          上飯田       3001801   647445.0    NaN    NaN   \n",
+      "4005  2014        4036          上飯田       3001801   655872.0    NaN    NaN   \n",
+      "4006  2015        4036          上飯田       3001801   675505.0    NaN    NaN   \n",
+      "4007  1991        4037           味鋺       3001802   409157.0    NaN    NaN   \n",
+      "4008  1992        4037           味鋺       3001802   397405.0    NaN    NaN   \n",
+      "4009  1993        4037           味鋺       3001802   369678.0    NaN    NaN   \n",
+      "4010  1994        4037           味鋺       3001802   346379.0    NaN    NaN   \n",
+      "4011  1995        4037           味鋺       3001802   322545.0    NaN    NaN   \n",
+      "4012  1996        4037           味鋺       3001802   299422.0    NaN    NaN   \n",
+      "4013  1997        4037           味鋺       3001802   285060.0    NaN    NaN   \n",
+      "4014  1998        4037           味鋺       3001802   265123.0    NaN    NaN   \n",
+      "4015  1999        4037           味鋺       3001802   262369.0    NaN    NaN   \n",
+      "4016  2000        4037           味鋺       3001802   248644.0    NaN    NaN   \n",
+      "4017  2001        4037           味鋺       3001802   229127.0    NaN    NaN   \n",
+      "4018  2002        4037           味鋺       3001802   226365.0    NaN    NaN   \n",
+      "4019  2003        4037           味鋺       3001802   435508.0    NaN    NaN   \n",
+      "4020  2004        4037           味鋺       3001802   564849.0    NaN    NaN   \n",
+      "4021  2005        4037           味鋺       3001802   628981.0    NaN    NaN   \n",
+      "4022  2006        4037           味鋺       3001802   651016.0    NaN    NaN   \n",
+      "4023  2007        4037           味鋺       3001802   672279.0    NaN    NaN   \n",
+      "4024  2008        4037           味鋺       3001802   695038.0    NaN    NaN   \n",
+      "4025  2009        4037           味鋺       3001802   686077.0    NaN    NaN   \n",
+      "4026  2010        4037           味鋺       3001802   708468.0    NaN    NaN   \n",
+      "4027  2011        4037           味鋺       3001802   709925.0    NaN    NaN   \n",
+      "4028  2012        4037           味鋺       3001802   705755.0    NaN    NaN   \n",
+      "4029  2013        4037           味鋺       3001802   734613.0    NaN    NaN   \n",
+      "4030  2014        4037           味鋺       3001802   745350.0    NaN    NaN   \n",
+      "4031  2015        4037           味鋺       3001802   778484.0    NaN    NaN   \n",
+      "\n",
+      "      kamiida  higashiyama  tsurumai  sakuradori  aonami  shinkansen  tokaido  \\\n",
+      "0         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "1         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "2         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "3         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "5         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "6         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "7         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "8         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "9         NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "10        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "11        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "12        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "13        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "14        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "15        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "16        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "17        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "18        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "19        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "20        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "21        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "22        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "23        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "24        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "25        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "26        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "27        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "28        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "29        NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "...       ...          ...       ...         ...     ...         ...      ...   \n",
+      "4002      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4003      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4004      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4005      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4006      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4007      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4008      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4009      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4010      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4011      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4012      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4013      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4014      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4015      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4016      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4017      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4018      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4019      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4020      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4021      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4022      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4023      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4024      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4025      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4026      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4027      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4028      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4029      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4030      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "4031      NaN          NaN       NaN         NaN     NaN         NaN      NaN   \n",
+      "\n",
+      "      chuo  kansai  meitetsu  kintetsu  lines  \n",
+      "0      NaN     NaN       NaN       NaN      2  \n",
+      "1      NaN     NaN       NaN       NaN      2  \n",
+      "2      NaN     NaN       NaN       NaN      2  \n",
+      "3      NaN     NaN       NaN       NaN      2  \n",
+      "4      NaN     NaN       NaN       NaN      2  \n",
+      "5      NaN     NaN       NaN       NaN      2  \n",
+      "6      NaN     NaN       NaN       NaN      2  \n",
+      "7      NaN     NaN       NaN       NaN      2  \n",
+      "8      NaN     NaN       NaN       NaN      2  \n",
+      "9      NaN     NaN       NaN       NaN      2  \n",
+      "10     NaN     NaN       NaN       NaN      2  \n",
+      "11     NaN     NaN       NaN       NaN      2  \n",
+      "12     NaN     NaN       NaN       NaN      2  \n",
+      "13     NaN     NaN       NaN       NaN      2  \n",
+      "14     NaN     NaN       NaN       NaN      2  \n",
+      "15     NaN     NaN       NaN       NaN      2  \n",
+      "16     NaN     NaN       NaN       NaN      2  \n",
+      "17     NaN     NaN       NaN       NaN      2  \n",
+      "18     NaN     NaN       NaN       NaN      2  \n",
+      "19     NaN     NaN       NaN       NaN      2  \n",
+      "20     NaN     NaN       NaN       NaN      2  \n",
+      "21     NaN     NaN       NaN       NaN      2  \n",
+      "22     NaN     NaN       NaN       NaN      2  \n",
+      "23     NaN     NaN       NaN       NaN      2  \n",
+      "24     NaN     NaN       NaN       NaN      2  \n",
+      "25     NaN     NaN       NaN       NaN      2  \n",
+      "26     NaN     NaN       NaN       NaN      2  \n",
+      "27     NaN     NaN       NaN       NaN      2  \n",
+      "28     NaN     NaN       NaN       NaN      2  \n",
+      "29     NaN     NaN       NaN       NaN      2  \n",
+      "...    ...     ...       ...       ...    ...  \n",
+      "4002   NaN     NaN       1.0       NaN      1  \n",
+      "4003   NaN     NaN       1.0       NaN      1  \n",
+      "4004   NaN     NaN       1.0       NaN      1  \n",
+      "4005   NaN     NaN       1.0       NaN      1  \n",
+      "4006   NaN     NaN       1.0       NaN      1  \n",
+      "4007   NaN     NaN       1.0       NaN      1  \n",
+      "4008   NaN     NaN       1.0       NaN      1  \n",
+      "4009   NaN     NaN       1.0       NaN      1  \n",
+      "4010   NaN     NaN       1.0       NaN      1  \n",
+      "4011   NaN     NaN       1.0       NaN      1  \n",
+      "4012   NaN     NaN       1.0       NaN      1  \n",
+      "4013   NaN     NaN       1.0       NaN      1  \n",
+      "4014   NaN     NaN       1.0       NaN      1  \n",
+      "4015   NaN     NaN       1.0       NaN      1  \n",
+      "4016   NaN     NaN       1.0       NaN      1  \n",
+      "4017   NaN     NaN       1.0       NaN      1  \n",
+      "4018   NaN     NaN       1.0       NaN      1  \n",
+      "4019   NaN     NaN       1.0       NaN      1  \n",
+      "4020   NaN     NaN       1.0       NaN      1  \n",
+      "4021   NaN     NaN       1.0       NaN      1  \n",
+      "4022   NaN     NaN       1.0       NaN      1  \n",
+      "4023   NaN     NaN       1.0       NaN      1  \n",
+      "4024   NaN     NaN       1.0       NaN      1  \n",
+      "4025   NaN     NaN       1.0       NaN      1  \n",
+      "4026   NaN     NaN       1.0       NaN      1  \n",
+      "4027   NaN     NaN       1.0       NaN      1  \n",
+      "4028   NaN     NaN       1.0       NaN      1  \n",
+      "4029   NaN     NaN       1.0       NaN      1  \n",
+      "4030   NaN     NaN       1.0       NaN      1  \n",
+      "4031   NaN     NaN       1.0       NaN      1  \n",
+      "\n",
+      "[3769 rows x 19 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "#利用線数が0 つまりまだ駅ができていない場所を取り除く\n",
+    "Nagoya_Station_data=Nagoya_Station_data[Nagoya_Station_data['lines']!=0]\n",
+    "\n",
+    "print(Nagoya_Station_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                   josha_num  lines\n",
+      "station_name year                  \n",
+      "いりなか         1991  3632472.0      1\n",
+      "             1992  3549946.0      1\n",
+      "             1993  3572420.0      1\n",
+      "             1994  3484716.0      1\n",
+      "             1995  3517137.0      1\n",
+      "             1996  3564984.0      1\n",
+      "             1997  3667531.0      1\n",
+      "             1998  3822759.0      1\n",
+      "             1999  3774603.0      1\n",
+      "             2000  3872345.0      1\n",
+      "             2001  5957099.0      1\n",
+      "             2002  4311543.0      1\n",
+      "             2003  3949068.0      1\n",
+      "             2004  2831220.0      1\n",
+      "             2005  2664289.0      1\n",
+      "             2006  2709581.0      1\n",
+      "             2007  2701426.0      1\n",
+      "             2008  2759197.0      1\n",
+      "             2009  2723242.0      1\n",
+      "             2010  2882630.0      1\n",
+      "             2011  2489562.0      1\n",
+      "             2012  2521816.0      1\n",
+      "             2013  2614891.0      1\n",
+      "             2014  2589814.0      1\n",
+      "             2015  2613444.0      1\n",
+      "ささしまライブ      2004   119622.0      1\n",
+      "             2005   882339.0      1\n",
+      "             2006   194865.0      1\n",
+      "             2007   195160.0      1\n",
+      "             2008   170932.0      1\n",
+      "...                      ...    ...\n",
+      "黄金           2011   374710.0      1\n",
+      "             2012   360689.0      1\n",
+      "             2013   364812.0      1\n",
+      "             2014   352614.0      1\n",
+      "             2015   392823.0      1\n",
+      "黒川           1991  4568916.0      2\n",
+      "             1992  4482097.0      2\n",
+      "             1993  4633788.0      2\n",
+      "             1994  4600094.0      2\n",
+      "             1995  4588017.0      2\n",
+      "             1996  4625114.0      2\n",
+      "             1997  4466803.0      2\n",
+      "             1998  4394033.0      2\n",
+      "             1999  4354582.0      2\n",
+      "             2000  4891146.0      2\n",
+      "             2001  5081568.0      2\n",
+      "             2002  4726079.0      2\n",
+      "             2003  5114826.0      2\n",
+      "             2004  4935770.0      2\n",
+      "             2005  5059561.0      2\n",
+      "             2006  5107456.0      2\n",
+      "             2007  4863088.0      2\n",
+      "             2008  4844763.0      2\n",
+      "             2009  4774441.0      2\n",
+      "             2010  4699496.0      2\n",
+      "             2011  4723563.0      2\n",
+      "             2012  4845255.0      2\n",
+      "             2013  4943361.0      2\n",
+      "             2014  4939585.0      2\n",
+      "             2015  5069276.0      2\n",
+      "\n",
+      "[3160 rows x 2 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "#jrなどの利用者数を合算する為にgroupbyする\n",
+    "datas = Nagoya_Station_data.groupby(['station_name','year'])[['josha_num','lines']].sum()\n",
+    "\n",
+    "print(datas)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "#非0のデータを探す\n",
+    "#datas['josha_num'].nonzero()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\n",
+    "#datas['josha_num'].nonzero()[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#非0のデータとして、nz_datasを定義\n",
+    "#nz_datas=datas[['josha_num','lines']].iloc[datas['josha_num'].nonzero()[0]]\n",
+    "#nz_datas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.axes._subplots.AxesSubplot at 0x1104f5160>"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<matplotlib.figure.Figure at 0x113bf5630>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#横軸 駅数、縦軸　年間乗車数\n",
+    "datas.plot(x='lines',y='josha_num', kind='scatter')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>josha_num</th>\n",
+       "      <th>lines</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>3.160000e+03</td>\n",
+       "      <td>3160.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>5.510158e+06</td>\n",
+       "      <td>1.319304</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>1.951138e+07</td>\n",
+       "      <td>0.921555</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>2.712000e+03</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>1.011673e+06</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>2.105047e+06</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>3.702974e+06</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>2.222740e+08</td>\n",
+       "      <td>9.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "          josha_num        lines\n",
+       "count  3.160000e+03  3160.000000\n",
+       "mean   5.510158e+06     1.319304\n",
+       "std    1.951138e+07     0.921555\n",
+       "min    2.712000e+03     1.000000\n",
+       "25%    1.011673e+06     1.000000\n",
+       "50%    2.105047e+06     1.000000\n",
+       "75%    3.702974e+06     1.000000\n",
+       "max    2.222740e+08     9.000000"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "datas.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[1.        , 0.85435272],\n",
+       "       [0.85435272, 1.        ]])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#相関係数\n",
+    "np.corrcoef(datas['lines'], datas['josha_num'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#np.corrcoef(datas['terminal'], datas['josha_num'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X=datas.lines.values\n",
+    "# X = np.vstack(datas.sum().lines)\n",
+    "# X = np.array([[value, 1] for value in X])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Xと同じ長さの列を作成して、1埋めする\n",
+    "A = np.vstack([X, np.ones(len(X))]).T"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "Y = datas.josha_num.values\n",
+    "#Y=np.c_[Y]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "18088559.302316356 -18354146.480176233\n"
+     ]
+    }
+   ],
+   "source": [
+    "#傾きa, 切片bを求める\n",
+    "\n",
+    "a,b = np.linalg.lstsq(A,Y,rcond=None)[0]\n",
+    "print(a,b)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<matplotlib.lines.Line2D at 0x113ebacf8>]"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<matplotlib.figure.Figure at 0x113ec7320>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "X2 = np.arange(0, 9, 0.01)\n",
+    "\n",
+    "#推定Yのplot\n",
+    "plt.plot(X2, a*X2 + b)\n",
+    "\n",
+    "#横軸 駅数、縦軸　年間乗車数\n",
+    "plt.plot(X,Y,'ro')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3.248031395400902e+17"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#決定係数を手計算する\n",
+    "\n",
+    "#残差計算\n",
+    "child = ((datas['josha_num'] - (datas['lines']*a + b))**2).sum()\n",
+    "child"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.2026118598902098e+18"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#分母の計算\n",
+    "mother = ((datas['josha_num'] - datas['josha_num'].mean())**2).sum()\n",
+    "mother"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.7299185627774014"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#決定係数\n",
+    "R = 1 - child / mother\n",
+    "R"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
